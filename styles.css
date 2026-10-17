@@ -1,0 +1,377 @@
+/* === THEME VARIABLES (light by default) === */
+:root {
+    color-scheme: light;
+    --bg: #e0e0e0;            /* page background */
+    --text: #333333;          /* body text */
+    --heading: #212121;       /* headings */
+    --muted: #616161;         /* secondary text / borders */
+    --card-bg: #f5f5f5;       /* card & box background */
+    --card-border: #9e9e9e;   /* card & box border */
+    --nav-bg: #424242;        /* navigation bar */
+    --nav-text: #ffffff;      /* navigation links */
+    --nav-hover: #757575;     /* navigation hover */
+    --accent: #424242;        /* links & sub-headings */
+    --img-border: #bdbdbd;    /* image border */
+}
+
+/* ✅ DARK MODE — pure CSS: checking the hidden toggle flips every variable */
+:root:has(#theme-toggle:checked) {
+    color-scheme: dark;
+    --bg: #121212;
+    --text: #d8d8d8;
+    --heading: #f2f2f2;
+    --muted: #a8a8a8;
+    --card-bg: #1e1e1e;
+    --card-border: #4d4d4d;
+    --nav-bg: #1b1b1b;
+    --nav-text: #f2f2f2;
+    --nav-hover: #383838;
+    --accent: #cfcfcf;
+    --img-border: #5a5a5a;
+}
+
+/* === BASE STYLES === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* === THEME TOGGLE SWITCH === */
+.theme-input {
+    position: fixed;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.theme-switch {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 200;
+    width: 64px;
+    height: 34px;
+    border-radius: 999px;
+    background-color: var(--nav-bg);
+    border: 2px solid var(--card-border);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.theme-knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    transition: transform 0.3s ease;
+}
+
+:root:has(#theme-toggle:checked) .theme-knob {
+    transform: translateX(30px);
+}
+
+.theme-input:focus-visible + .theme-switch {
+    outline: 3px solid var(--muted);
+    outline-offset: 3px;
+}
+
+/* === NAVIGATION === */
+nav {
+    background-color: var(--nav-bg);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    transition: background-color 0.3s ease;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.nav-links a {
+    display: inline-block;
+    text-decoration: none;
+    color: var(--nav-text);
+    font-weight: bold;
+    font-size: 18px;
+    padding: 12px 28px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+    background-color: var(--nav-hover);
+    transform: scale(1.05);
+}
+
+/* === ALL SECTIONS === */
+.section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 20px 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+    /* ✅ CSS ANIMATION — Fade in effect */
+    animation: fadeIn 0.8s ease forwards;
+    opacity: 0;
+}
+
+.section:nth-child(even) { animation-delay: 0.2s; }
+.section:nth-child(odd)  { animation-delay: 0.1s; }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--heading);
+    font-size: 32px;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+/* === HOME SECTION === */
+.home-section {
+    text-align: center;
+    color: var(--heading);
+}
+
+.profile-pic {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 5px solid var(--muted);
+    object-fit: cover;
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+    transition: border-color 0.3s ease;
+}
+
+@keyframes float {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+.tagline {
+    font-size: 24px;
+    font-style: italic;
+    margin: 10px 0;
+    color: var(--muted);
+    transition: color 0.3s ease;
+}
+
+.intro {
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 19px;
+}
+
+/* === CONTENT BOXES === */
+.content-box {
+    background-color: var(--card-bg);
+    padding: 35px;
+    border-radius: 12px;
+    border: 3px solid var(--card-border);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-size: 17px;
+    transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.content-box:hover {
+    transform: scale(1.01);
+}
+
+.content-box h3 {
+    margin: 20px 0 10px;
+    color: var(--accent);
+    font-size: 22px;
+    transition: color 0.3s ease;
+}
+
+.content-box ul,
+.content-box ol {
+    margin-left: 25px;
+    margin-bottom: 10px;
+}
+
+.content-box a {
+    color: var(--accent);
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.content-box a:hover {
+    text-decoration: underline;
+    color: var(--heading);
+}
+
+/* === SKILLS SECTION === */
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.skill-card {
+    background-color: var(--card-bg);
+    width: 330px;
+    padding: 25px;
+    border-radius: 12px;
+    border: 3px solid var(--card-border);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-size: 17px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.skill-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+    border-color: var(--muted);
+}
+
+.skill-card h3 {
+    color: var(--heading);
+    font-size: 22px;
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+}
+
+/* === PROJECTS GRID === */
+.projects-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.project-card {
+    background-color: var(--card-bg);
+    width: 330px;
+    padding: 25px;
+    border-radius: 12px;
+    border: 3px solid var(--card-border);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+.project-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 10px 0;
+    border: 2px solid var(--img-border);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.project-img:hover {
+    transform: scale(1.03);
+}
+
+/* ✅ RESPONSIVE MOBILE DESIGN — BONUS */
+@media (max-width: 768px) {
+    .nav-links {
+        gap: 8px;
+    }
+    .nav-links a {
+        padding: 9px 18px;
+        font-size: 15px;
+    }
+    .section {
+        padding: 110px 16px 50px;
+    }
+    .project-card,
+    .skill-card {
+        width: 100%;
+    }
+    .profile-pic {
+        width: 170px;
+        height: 170px;
+    }
+    .section h2 {
+        font-size: 26px;
+    }
+    .content-box, .skill-card {
+        padding: 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-links {
+        gap: 8px;
+    }
+    .section {
+        padding: 160px 14px 40px;
+    }
+    .theme-switch {
+        bottom: 16px;
+        right: 16px;
+    }
+}
+
+/* ✅ CREATIVE ADDITIONAL FEATURE — Custom scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--card-border);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--nav-hover);
+}
